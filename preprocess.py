@@ -99,8 +99,9 @@ def segment(f):
   PUNC = set('!?！？。')
   # .
   # be careful about '-', since it DELIMITERS will be used in [DELIMITERS]
-  DELIMITERS = ' \-~,;:\'"{}' + \
-               '；﹔︰﹕：，﹐、．﹒˙·～‥‧′〃〝〞‵‘’『』「」“”'
+  # escape it \-
+  DELIMITERS = ' \-~,;:\'"{}()' + \
+               '；﹔︰﹕：，﹐、．﹒˙·～‥‧′〃〝〞‵‘’『』「」“”》《（）【】'
 
   word_text = ''
   id_text = ''
@@ -108,6 +109,15 @@ def segment(f):
     line = line.strip()
     if not line:
       continue
+
+    # change to lowercase
+    line = line.lower()
+    # change concrete date to DATE
+    line = re.sub('\d{2,4}[./]\d{1,2}[./]\d{1,2}', ' DATE ', line)
+    line = re.sub('\d{1,2}[./]\d{1,2}[./]\d{2,4}', ' DATE ', line)
+    # change concrete url to URL
+    line = re.sub('http:[/\w.-]+', ' URL ', line)
+
     # find special substr:
     # @xxx
     # !!!
@@ -123,6 +133,10 @@ def segment(f):
 
     def push_str(str):
       if not str: return
+      # change concrete number to DIGIT
+      # don't do this before the split
+      # since it may change @111xxx to @ DIGIT xxx
+      str = re.sub('-?((\d+(\.\d+)?)|(\.\d+))([eE]-?\d+)?', ' DIGIT ', str)
       for s in bamboo(str).split():
         push_word(s)
 
