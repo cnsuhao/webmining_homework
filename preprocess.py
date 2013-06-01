@@ -3,6 +3,7 @@
 import sys, os, re
 import MySQLdb as mdb
 from subprocess import PIPE, Popen
+from glob import glob
 
 USAGE = \
 '''
@@ -185,11 +186,36 @@ def segment(f):
   open(f + '.seg', 'w').write(word_text)
   open(f + '.id', 'w').write(id_text)
 
+
+##########################################################
+# traverse weibo in f with window size k
+# add_num: whether to add word num in the front of the sentence or not
+def slide(f, k, out_dir, add_num=True):
+  if not os.path.exists(f):
+    return
+  lines = open(f).readlines()
+  if add_num:
+    for ix in range(len(lines)):
+      line = lines[ix].split()
+      line.insert(0, str(len(line)))
+      lines[ix] = ' '.join(line)
+
+  out_dir = out_dir + '/%s' % ('.'.join(os.path.basename(f).split('.')[:-1]))
+  if not os.path.isdir(out_dir):
+    os.mkdir(out_dir)
+  else:
+    for f in glob(out_dir + '/*'):
+      os.remove(f)
+
+  for ix in range(max(1, len(lines) - k)):
+    out_file = out_dir + '/' + ('%d.%d' % (k, ix))
+    open(out_file, 'w').write('\n'.join(lines[ix:ix+k]))
+
 if __name__ == '__main__':
   # extract uid out_dir
   if len(sys.argv) == 4 and sys.argv[1] == 'extract':
-    uid = [int(line) for line in open(sys.argv[1])]
-    out_dir = sys.argv[2]
+    uid = [int(line) for line in open(sys.argv[2]) if line]
+    out_dir = sys.argv[3]
     if not os.path.isdir(out_dir):
       os.mkdir(out_dir)
 
@@ -215,6 +241,18 @@ if __name__ == '__main__':
       segment(f)
     save_word_id()
 
+  # slide
+  elif len(sys.argv) == 5 and sys.argv[1] == 'slide':
+    input_list = open(sys.argv[2])
+    k = int(sys.argv[3])
+    out_dir = sys.argv[4]
+    if not os.path.isdir(out_dir):
+      os.mkdir(out_dir)
+    for f in input_list:
+      f = f.strip()
+      if not f or not os.path.exists(f):
+        continue
+      slide(f, k, out_dir)
   else:
     print(USAGE)
     exit(1)
