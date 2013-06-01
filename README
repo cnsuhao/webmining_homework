@@ -14,3 +14,10 @@ sample_data有一个例子
     //
 我当成一个词了    
 
+id_word_count.txt.sort
+    wid w   DF  UF
+    其中DF是doc frequence，我把一条微薄当作一个doc
+    其中UF是user frequence
+
+单词总数 280469
+要去掉一些DF,UF很大/小的单词吧
