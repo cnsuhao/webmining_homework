@@ -8,3 +8,9 @@ word_id.txt
 
 sample_data有一个例子
 
+分词时
+    @xxx
+    [xxx]
+    //
+我当成一个词了    
+
