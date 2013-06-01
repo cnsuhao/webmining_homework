@@ -18,10 +18,12 @@ This script, can
     //@xxx:
     !!!
     ...
+3) slide
 
 USAGE:
 python preprocess.py extract uid out_dir
 python3 preprocess.py segment input_list
+python3 preprocess.py slide input_list k out_dir
 '''
 
 HOST = 'localhost'
@@ -48,7 +50,7 @@ def init_word_id(f):
 
 def save_word_id():
   with open(WORD_ID, 'w') as out:
-    for w, d in word_id:
+    for w, d in word_id.items():
       out.write('%s\t%d\n' % (w, d))
 
 def add_word(w):
