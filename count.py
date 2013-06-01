@@ -7,13 +7,15 @@ USAGE = \
 
 Usage:
 python3 count.py list
-count DF, here doc is a weibo'''
+count DF, here doc is a weibo
+count UF, U is user'''
 
 ID_WORD = 'id_word.txt'
 WORD_COUNT = 'id_word_count.txt'
 
 word_id = {}
-word_count = collections.defaultdict(int)
+DF = collections.defaultdict(int)
+UF = collections.defaultdict(int)
 
 def init_word_id():
   for line in open(ID_WORD):
@@ -28,8 +30,9 @@ def save_word_id():
 
 def save_word_count():
   out = open(WORD_COUNT, 'w')
+  out.write('wid\tw\tDF\tUF\n')
   for (w, d) in word_id.items():
-    out.write('%d\t%s\t%d\n' % (d, w, word_count[d]))
+    out.write('%d\t%s\t%d\t%d\n' % (d, w, DF[d], UF[d]))
 
 def map_id_line(line):
   lst = []
@@ -41,6 +44,7 @@ def count_df(f, have_num=False, mapid=False):
   seg = f + '.seg'
   id = f + '.id'
   id_text = ''
+  all_word_id = set()
   for line in open(seg):
     line = line.strip().split()
     if not line:
@@ -49,7 +53,11 @@ def count_df(f, have_num=False, mapid=False):
       line = map_id_line(line)
       id_text += ' '.join(str(x) for x in line) + '\n'
     for x in set(line):
-      word_count[int(x)] += 1
+      DF[int(x)] += 1
+    all_word_id |= set(line)
+
+  for x in all_word_id:
+    UF[int(x)] += 1
 
   if mapid:
     open(id, 'w').write(id_text)
