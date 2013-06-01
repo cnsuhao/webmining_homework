@@ -104,7 +104,7 @@ def segment(f):
   # be careful about '-', since it DELIMITERS will be used in [DELIMITERS]
   # escape it \-
   DELIMITERS = ' \-~,;:\'"{}()' + \
-               '；﹔︰﹕：，﹐、．﹒˙·～‥‧′〃〝〞‵‘’『』「」“”》《（）【】'
+               '　；﹔︰﹕：，﹐、．﹒˙·～‥‧′〃〝〞‵‘’『』「」“”》《（）【】'
 
   word_text = ''
   id_text = ''
