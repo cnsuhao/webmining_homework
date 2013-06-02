@@ -38,14 +38,19 @@ if __name__ == '__main__':
     m = len(yy[0])
     nyy = numpy.array(yy)
     yy = [0] * m
+    '''
     for i in range(m):
       yy[i] = numpy.average(nyy[:, i])
+    '''
+    for i in range(numpy.size(nyy, 0)):
+      if numpy.var(yy) < numpy.var(nyy[i,:]):
+        yy = nyy[i, :]
     ax = subplot(n, 1, ix+1)
     ax.plot(range(m), yy, label='%d    %f' % (id, uid_depress[ix][1]))
     # ax.legend()
     ax.legend()
 
   plt.plot()
-  plt.savefig('all.png')
+  plt.savefig('all_max_var.png')
 
 
