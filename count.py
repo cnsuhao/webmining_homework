@@ -50,8 +50,12 @@ def count_df(f, have_num=False, mapid=False):
     if not line:
       continue
     if mapid:
+      assert have_num == False
       line = map_id_line(line)
       id_text += ' '.join(str(x) for x in line) + '\n'
+
+    if have_num:
+      line = line[1:]
     for x in set(line):
       DF[int(x)] += 1
     all_word_id |= set(line)
