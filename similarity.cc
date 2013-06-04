@@ -1,4 +1,5 @@
 #include "iostream"
+#include "cassert"
 #include "string"
 #include "sstream"
 #include "fstream"
@@ -10,10 +11,9 @@ using namespace std;
 
 double kl_divergence(vector<double> P, vector<double> Q) {
   double sum = 0;
-  for (double p : P) {
-    for (double q : Q) {
-      sum += p * log(p/q);
-    }
+  assert(P.size() == Q.size());
+  for (auto p = P.begin(), q = Q.begin(); p != P.end(); p++, q++) {
+    sum += *p * log(*p / *q);
   }
   return sum;
 }
@@ -53,9 +53,8 @@ int main(int argc, const char* argv[]) {
       }
     }
   }
-
   cout << min_kl << endl << max_kl << endl;
- 
+
   return 0;
 }
 

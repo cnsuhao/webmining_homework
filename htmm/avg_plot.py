@@ -32,21 +32,6 @@ def var_trend_plot(nyy, file_list):
     yy[ix] = numpy.var(nyy[p,:])
   return yy
 
-def kl_divergence(x, y):
-  d = 0
-  for (ix, p) in enumerate(x):
-    q = y[ix]
-    d += p*math.log(p/q, 2)
-  return d
-
-def func_kl(xx, yy, func):
-  kl = None
-  for x in xx:
-    for y in yy:
-      _kl = kl_divergence(x, y)
-      kl = func(kl, _kl) if kl else _kl
-  return kl
-
 if __name__ == '__main__':
   if len(sys.argv) != 4:
     print(USAGE)
@@ -74,23 +59,6 @@ if __name__ == '__main__':
     uid_depress[ix][1] = float(line[1])
     id = int(uid_depress[ix][0])
     # print(beg[id], end[id])
-    nxx = numpy.array(theta[beg[id]:end[id]+1])
-    # kl
-    max_trend = []
-    min_trend = []
-    for (iy, line) in enumerate(uid_depress):
-      uid_depress[iy][1] = float(line[1])
-      idy = int(uid_depress[iy][0])
-      nyy = numpy.array(theta[beg[idy]:end[idy]+1])
-      max_trend.append(func_kl(nxx, nyy, max))
-      min_trend.append(func_kl(nxx, nyy, min))
-
-    ax = subplot(n, 1, ix+1)
-    ax.plot(range(len(max_trend)), max_trend, label='%d    %f    max' % (id, uid_depress[ix][1]))
-    ax.plot(range(len(min_trend)), min_trend, label='%d    %f    min' % (id, uid_depress[ix][1]))
-    ax.legend()
-
-    continue
 
     nyy = numpy.array(theta[beg[id]:end[id]+1])
     m = numpy.size(nyy, 1)
