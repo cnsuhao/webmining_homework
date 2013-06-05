@@ -1026,6 +1026,3 @@
 1026	@carrie_lulu
 1027	@rene5230
 1028	@akkokiko
-1029	LOW
-1030	MID
-1031	HIGH
