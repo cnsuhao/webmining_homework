@@ -1,22 +1,22 @@
 
-* 工作量
-** 资料调研
+* 资料调研
   1. TF-IDF
-     + 特征选择方法（基于DF, MI, IG, CHI, TS) [fn:1]
+     + 特征选择方法（基于DF, MI, IG, CHI, TS) [1]
      + DF效果与最好的IG, CHI类似，选用它做特征选择
   2. Topic Model, HTMM
      + HTMM与LDA的比较
      + HTMM的实现，OpenHTMM
   3. 情感词典 hownet
   4. python机器学习库scikt-learn
-** 数据预处理
-  1. 
+* 数据预处理
+  1. 从数据库导出160个评分用户微薄
+  2. 
   
    
 
 
 
-[fn:1] Yang, Y., Pedersen J.P. A Comparative Study on Feature Selection in Text Categorization (pdf) Proceedings of the Fourteenth International Conference on Machine Learning (ICML'97), 1997, pp412-420.
+[1] Yang, Y., Pedersen J.P. A Comparative Study on Feature Selection in Text Categorization (pdf) Proceedings of the Fourteenth International Conference on Machine Learning (ICML'97), 1997, pp412-420.
 
 
 
