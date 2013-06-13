@@ -1,22 +1,46 @@
 
 * 资料调研
   1. TF-IDF
-     + 特征选择方法（基于DF, MI, IG, CHI, TS) [1]
-     + DF效果与最好的IG, CHI类似，选用它做特征选择
+     - 特征选择方法（基于DF, MI, IG, CHI, TS) [1]
+     - DF效果与最好的IG, CHI类似，选用它做特征选择
   2. Topic Model, HTMM
-     + HTMM与LDA的比较
-     + HTMM的实现，OpenHTMM
-  3. 情感词典 hownet
-  4. python机器学习库scikt-learn
+     - HTMM与LDA的比较
+     - HTMM的实现，OpenHTMM [2]
+  3. 设计用户抑郁相似度计算
+     - 取最相似微薄作为相似度
+     - 取平均相似微薄作为相似度
+     - 计算两个微薄序列相似度，采用动态规划算法，类似编辑距离
+     - 微薄相似度采用KL距离，cos相似度计算
+  4. 分词器及其效果，选用了一个开源的NlpBamboo
+  5. python机器学习库scikt-learn及画图包matplotlib
+     - 回归分析
+     - 画图
+  6. 情感词典 hownet
 * 数据预处理
-  1. 从数据库导出160个评分用户微薄
-  2. 
+  1. 从数据库导出160个评分用户微薄及用户信息
+  2. 简单聚类分析、回归分析，发现效果不佳
+  3. 在分词前对微薄内容进行处理，包括
+     - 对类似@xxx, //@xxx, [表情]预先抽取出来
+     - 替换数字、日期时间、链接为DIGIT，DATE，URL
+     - 去掉特殊符号，如❤, ღ, ❥, ♡
+  4. 使用NlpBamboo分词
+     - 对上述处理后的微薄，当作一个句子扔给NlpBamboo分词
+     - 对整个语料分词后的单词编号，方便后续处理
+  5. 使用窗口滑动方法每5条连续微薄合成一条长微薄
+  6. 每一条长微薄当作一篇文章，扔给OpenHTMM学习出每条长微薄的主题分布
+  7. 使用matplotlib画图观察主题分布
+  8. 
+* 使用学习器训练，画图
+  1. 
+* 结果分析及改进方案
+  1. 
+  2. 结果溯源，找回对应微薄
   
    
 
 
-
+* 参考
 [1] Yang, Y., Pedersen J.P. A Comparative Study on Feature Selection in Text Categorization (pdf) Proceedings of the Fourteenth International Conference on Machine Learning (ICML'97), 1997, pp412-420.
-
+[2] https://code.google.com/p/openhtmm/
 
 
