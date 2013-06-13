@@ -30,16 +30,25 @@
   6. 每一条长微薄当作一篇文章，扔给OpenHTMM学习出每条长微薄的主题分布
   7. 使用matplotlib画图观察主题分布
   8. 用最压抑用户的微薄跟其他用户的使用KL距离计算微薄主题分布相似度，发现不呈线性关系，是震荡的，基本放弃使用微薄相似度来代替用户抑郁相似度想法
+* baseline & 我们的方法
+  1. 计算用户在2012年11月份左右的微薄的TF-IDF作为特征
+  2. 设计其他特征，比如用户原创/转发微薄比例，粉丝/关注比例等
+  3. 抽取用户微薄熵最小的topk个主题分布作为特征
+     - 尝试过用方差最大的topk个主题分布作为特在，效果没有熵最小的好
+  4. 同时，预测评分0.5也作为baseline
 * 使用学习器训练，画图
-  1. 
+  1. 尝试使用svm，gradientboosting等学习器来做回归分析
+  2. 参数调试
+  3. 画在不同参数下效果图
 * 结果分析及改进方案
-  1. 
+  1. 在k比较小时，我们的方法比直接预测0.5的效果要好
   2. 结果溯源，找回对应微薄
-  
+  3. 从溯源的微薄看出，存在噪音（比如非情感微薄，广告微薄）
+     - 去掉噪音是我们将来主要的改进方向
+     - 引入情感词典来过滤非情感微薄
    
 
 
-* 参考
 [1] Yang, Y., Pedersen J.P. A Comparative Study on Feature Selection in Text Categorization (pdf) Proceedings of the Fourteenth International Conference on Machine Learning (ICML'97), 1997, pp412-420.
 [2] https://code.google.com/p/openhtmm/
 
